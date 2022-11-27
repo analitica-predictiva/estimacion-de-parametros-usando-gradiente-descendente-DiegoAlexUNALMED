@@ -39,24 +39,22 @@ def pregunta_02():
     x_poly, y = pregunta_01()
 
     # Fije la tasa de aprendizaje en 0.0001 y el número de iteraciones en 1000
-    learning_rate = 0.0001
+    learning_rate = 0.00004993
     n_iterations = 1000
 
     # Defina el parámetro inicial `params` como un arreglo de tamaño 3 con ceros
     params = np.zeros(x_poly.shape[1])
-    histerror = []
+
     for epoch in range(n_iterations):
         # Compute el pronóstico con los parámetros actuales
         y_pred = np.dot(x_poly,params)
 
         # Calcule el error
         error = y - y_pred
-        histerror.append(sum(error))
+
         # Calcule el gradiente
 
-        primero = [error * x_value for error, x_value in zip(error, x_poly[:,1])]
-        segundo = [error * x_value for error, x_value in zip(error, x_poly[:,2])]
-        gradient = np.array([-2*sum(error),-2*sum(primero),-2*sum(segundo)])
+        gradient = np.array([-2*sum(error),-2*sum([error * x_value for error, x_value in zip(error, x_poly[:,1])]),-2*sum([error * x_value for error, x_value in zip(error, x_poly[:,2])])])
 
         # Actualice los parámetros
         params = params - learning_rate * gradient
